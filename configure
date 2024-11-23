@@ -6118,6 +6118,9 @@ if test "x$build" = "x$target"; then
     x86_64|amd64)
       PRECOMPILED_ARCH=x86_64
       ;;
+    aarch64)
+      PRECOMPILED_ARCH=aarch64
+      ;;
     *)
       as_fn_error $? "the compiler is not precompiled for target_cpu $target_cpu." "$LINENO" 5
       ;;
@@ -6143,6 +6146,12 @@ printf "%s\n" "yes" >&6; }
 printf "%s\n" "yes" >&6; }
     RUNTIME_DEFS="$RUNTIME_DEFS -DHOST_CPU_i386"
     LLCFLAGS="$LLCFLAGS -no-x86-call-frame-opt"
+    ;;
+  aarch64)
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+    RUNTIME_DEFS="$RUNTIME_DEFS -DHOST_CPU_aarch64"
+    LLCFLAGS="$LLCFLAGS"
     ;;
   *)
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
@@ -8778,6 +8787,7 @@ do
   *) as_fn_error $? "invalid argument: '$ac_config_target'" "$LINENO" 5;;
   esac
 done
+
 
 
 # If the user did not use the arguments to specify the items to instantiate,

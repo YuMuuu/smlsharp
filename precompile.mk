@@ -18,6 +18,8 @@ ifeq ($(ARCH),x86)
 override TRIPLE = i686-apple-darwin
 else ifeq ($(ARCH),x86_64)
 override TRIPLE = x86_64-apple-darwin
+else ifeq ($(ARCH),aarch64)
+override TRIPLE = aarch64-apple-darwin
 else ifdef ARCH
 $(error ARCH must be either x86 or x86_64)
 endif
@@ -55,7 +57,7 @@ override rev = \
 ifndef ARCH
 
 all: precompiled/Makefile
-	$(MAKE) -f precompile.mk all ARCH=x86_64
+	$(MAKE) -f precompile.mk all ARCH=aarch64
 
 .PHONY: all
 

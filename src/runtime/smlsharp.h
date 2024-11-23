@@ -246,11 +246,15 @@
  * The SML# compiler emits call sequences compliant with this convention
  * for runtime primitive calls.
  */
-#ifdef __GNUC__
-/* first three arguments are passed by machine registers */
-# define SML_PRIMITIVE __attribute__((regparm(3))) NOINLINE
+#if __GNUC__
+  #if __aarch64__
+    #define SML_PRIMITIVE NOINLINE
+  #else
+    /* first three arguments are passed by machine registers */
+    #define SML_PRIMITIVE __attribute__((regparm(3))) NOINLINE
+  #endif
 #else
-# error regparm(3) calling convention is not supported
+  #error regparm(3) calling convention is not supported
 #endif
 
 /*
@@ -316,7 +320,11 @@ void sml_msg_init(void);
 	((uint64_t)d__ << 32) | a__; \
 })
 
-#define asm_pause() do { __asm__ volatile ("pause" ::: "memory"); } while(0)
+#ifdef __aarch64__
+    #define asm_pause() do { __asm__ volatile ("wfe" ::: "memory"); } while(0)
+#else
+    #define asm_pause() do { __asm__ volatile ("pause" ::: "memory"); } while(0)
+#endif
 
 /*
  * malloc with error checking
