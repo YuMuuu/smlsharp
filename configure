@@ -8788,8 +8788,6 @@ do
   esac
 done
 
-
-
 # If the user did not use the arguments to specify the items to instantiate,
 # then the envvar interface is used.  Set only those that are not.
 # We use the long form for the default assignment because of an extremely
